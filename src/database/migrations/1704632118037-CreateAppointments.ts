@@ -15,15 +15,11 @@ export class CreateAppointments1704632118037 implements MigrationInterface {
                     },
                     {
                         name: "user_id",
-                        type: "varchar",
-                        length: "50",
-                        isNullable: false
+                        type: "int",
                     },
                     {
                         name: "artist_id",
-                        type: "varchar",
-                        length: "50",
-                        isNullable: false
+                        type: "int",
                     },
                     {
                         name: "date",

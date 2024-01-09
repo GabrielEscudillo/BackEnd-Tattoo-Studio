@@ -37,7 +37,7 @@ export class CreateArtists1704632069195 implements MigrationInterface {
                 ],
                 foreignKeys: [  
                     {
-                        columnNames: ["users_id"],
+                        columnNames: ["user_id"],
                         referencedTableName: "users",
                         referencedColumnNames: ["id"],
                         onDelete: "CASCADE",

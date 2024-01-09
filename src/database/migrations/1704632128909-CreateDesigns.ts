@@ -15,9 +15,7 @@ export class CreateDesigns1704632128909 implements MigrationInterface {
           },
           {
             name: "artist_id",
-            type: "varchar",
-            length: "50",
-            isNullable: false,
+            type: "int",
           },
           {
             name: "style",
