@@ -14,15 +14,16 @@ export class CreateArtists1704632069195 implements MigrationInterface {
                         generationStrategy: "increment",
                     },
                     {
+                        name: "user_id",
+                        type: "int",
+                    },
+                    {
                         name: "name",
                         type: "varchar",
                         length: "50",
                         isNullable: false
                     },
-                    {
-                        name: "user_id",
-                        type: "int",
-                    },
+
                     {
                         name: "created_at",
                         type: "timestamp",

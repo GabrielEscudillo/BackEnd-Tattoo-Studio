@@ -14,6 +14,11 @@ export class CreateUsers1704632022555 implements MigrationInterface {
                         generationStrategy: "increment",
                     },
                     {
+                        name: "role_id",
+                        type: "int",
+                        default: 1
+                    },
+                    {
                         name: "name",
                         type: "varchar",
                         length: "255",
@@ -49,11 +54,6 @@ export class CreateUsers1704632022555 implements MigrationInterface {
                         type: "int",
                         length: "20",
                         isNullable: false
-                    },
-                    {
-                        name: "role_id",
-                        type: "int",
-                        default: 1
                     },
                     {
                         name: "created_at",
