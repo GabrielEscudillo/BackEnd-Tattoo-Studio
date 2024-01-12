@@ -4,7 +4,7 @@ import { Request, Response } from "express";
 
 export interface Controller {
     createUser(req: Request, res: Response): Promise<void | Response<any>>;
-    //Login?
+    loginUser(req: Request, res: Response): Promise<void | Response<any>>;
     getProfile(req: Request, res: Response): Promise<void | Response<any>>;
     updateProfile(req: Request, res: Response): Promise<void | Response<any>>;
 
