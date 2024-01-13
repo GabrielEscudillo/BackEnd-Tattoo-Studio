@@ -3,13 +3,12 @@ import { Request, Response } from "express";
 //----------------------------------------------------------//
 
 export interface Controller {
+
+    getAllUsers(req: Request, res: Response): Promise<void | Response<any>>; /*SUPERADMIN*/
     createUser(req: Request, res: Response): Promise<void | Response<any>>;
     // loginUser(req: Request, res: Response): Promise<void | Response<any>>;
     // getProfile(req: Request, res: Response): Promise<void | Response<any>>;
     // updateProfile(req: Request, res: Response): Promise<void | Response<any>>;
-    getAllUsers(req: Request, res: Response): Promise<void | Response<any>>; /*SUPERADMIN*/
-
-    // createRoles(req: Request, res: Response): Promise<void | Response<any>>;
 
     // createAppointment(req: Request, res: Response): Promise<void |Response<any>>;
     // updateAppointment(req: Request, res: Response): Promise<void | Response<any>>;
