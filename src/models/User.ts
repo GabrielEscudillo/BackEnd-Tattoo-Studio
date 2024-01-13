@@ -5,7 +5,8 @@ import {
     PrimaryGeneratedColumn, 
     JoinColumn, 
     ManyToOne, 
-    OneToMany 
+    OneToMany, 
+    OneToOne
 } from "typeorm";
 import { Role } from "./Role";
 import { Artist } from "./Artist";
@@ -46,10 +47,6 @@ export class User extends BaseEntity {
     @ManyToOne(() => Role, (role) => role.users)
     @JoinColumn ({name: "role_id"})
     role!: Role;
-
-    @ManyToOne(() => Artist, (artist) => artist.users)
-    @JoinColumn ({name: "artist_id"})
-    artist!: Artist;
 
     @OneToMany(() => Appointment, (appointment) => appointment.user_id)
     customerAppointments!: Appointment[];

@@ -1,4 +1,4 @@
-import { BaseEntity, Column, PrimaryGeneratedColumn, OneToMany, Entity } from "typeorm"
+import { BaseEntity, Column, PrimaryGeneratedColumn, OneToMany, Entity, OneToOne, JoinColumn } from "typeorm"
 import { User } from "./User";
 import { Design } from "./Design";
 import { Appointment } from "./Appointment";
@@ -29,4 +29,8 @@ export class Artist extends BaseEntity{
 
     @OneToMany(() => Appointment, (appointment) => appointment.artist)
     customerAppointments!: Appointment[];
+
+    @OneToOne(() => Artist, (artist) => artist.users)
+    @JoinColumn ({name: "artist_id"})
+    artist?: Artist;
 }

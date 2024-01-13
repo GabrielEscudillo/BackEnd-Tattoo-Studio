@@ -45,15 +45,17 @@ export class UserController implements Controller {
   }
   async createUser(req: Request, res: Response): Promise<void | Response<any>> {
     try {
-      const data = req.body;
+        const data = req.body;
 
-      const userRepository = AppDataSource.getRepository(User);
-      const newUser = await userRepository.save(data);
-      res.status(201).json(newUser);
-    } catch (error) {
-      res.status(500).json({
-        message: "Error while creating user",
-      });
+        const userRepository = AppDataSource.getRepository(User);
+        const newUser = await userRepository.save(data);
+        res.status(201).json(newUser);
+    } catch (error: any) {
+        console.error("Error while creating user:", error);
+        res.status(500).json({
+            message: "Error while creating user",
+            error: error.message // o error.toString() para obtener una representación de cadena del error
+        });
     }
-  }
+}
 }

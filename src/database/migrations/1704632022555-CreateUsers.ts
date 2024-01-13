@@ -22,38 +22,39 @@ export class CreateUsers1704632022555 implements MigrationInterface {
                         name: "name",
                         type: "varchar",
                         length: "255",
-                        isNullable: false
+                        isNullable: true
                     },
                     {
                         name: "last_name",
                         type: "varchar",
                         length: "255",
-                        isNullable: false
+                        isNullable: true
                     },
                     {
                         name: "address",
                         type: "varchar",
                         length: "255",
-                        isNullable: false
+                        isNullable: true
                     },
                     {
                         name: "email",
                         type: "varchar",
                         length: "100",
                         isUnique: true,
-                        isNullable: false
+                        isNullable: true
                     },
                     {
                         name: "password",
                         type: "varchar",
                         length: "100",
-                        isNullable: false
+                        isNullable: true
                     },
                     {
                         name: "phone_number",
                         type: "int",
                         length: "20",
-                        isNullable: false
+                        isUnique: true,
+                        isNullable: true
                     },
                     {
                         name: "created_at",

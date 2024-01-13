@@ -9,7 +9,7 @@
     "db:seed": "ts-node src/database/seeders/DatabaseSeeder.ts",
     "db:migrate": "npx typeorm-ts-node-commonjs migration:run -d ./src/database/data-source.ts",
     "db:drop": "npx typeorm-ts-node-commonjs schema:drop -d ./src/database/data-source.ts",
-    "db:refresh": "npm run db:drop && npm run db:migrate && npm run db:seed"
+    "db:refresh": "npm run db:drop && npm run db:migrate"
   },
   "keywords": [],
   "author": "",
