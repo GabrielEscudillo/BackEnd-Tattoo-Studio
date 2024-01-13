@@ -2,6 +2,7 @@ import { Controller } from "./controller";
 import { Request, Response } from "express";
 import { User } from "../models/User";
 import { AppDataSource } from "../database/data-source";
+import { Appointment } from "../models/Appointment";
 
 //----------
 
@@ -45,17 +46,34 @@ export class UserController implements Controller {
   }
   async createUser(req: Request, res: Response): Promise<void | Response<any>> {
     try {
-        const data = req.body;
+      const data = req.body;
 
-        const userRepository = AppDataSource.getRepository(User);
-        const newUser = await userRepository.save(data);
-        res.status(201).json(newUser);
+      const userRepository = AppDataSource.getRepository(User);
+      const newUser = await userRepository.save(data);
+      res.status(201).json(newUser);
     } catch (error: any) {
-        console.error("Error while creating user:", error);
-        res.status(500).json({
-            message: "Error while creating user",
-            error: error.message // o error.toString() para obtener una representación de cadena del error
-        });
+      console.error("Error while creating user:", error);
+      res.status(500).json({
+        message: "Error while creating user",
+        error: error.message, // o error.toString() para obtener una representación de cadena del error
+      });
     }
-}
+  }
+  async createAppointment(
+    req: Request,
+    res: Response
+  ): Promise<void | Response<any>> {
+    try {
+      const data = req.body;
+      const AppointmentRepository = AppDataSource.getRepository(Appointment);
+      const newAppointment = await AppointmentRepository.save(data);
+      res.status(201).json(newAppointment);
+    } catch (error: any) {
+      console.error("Error while creating Appointment:", error);
+      res.status(500).json({
+        message: "Error while creating Appointment",
+        error: error.message,
+      });
+    }
+  }
 }

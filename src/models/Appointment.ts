@@ -2,7 +2,7 @@ import { BaseEntity, Column, Entity, ManyToOne, PrimaryGeneratedColumn, JoinColu
 import { User } from "./User";
 import { Artist } from "./Artist";
 
-@Entity()
+@Entity("appointments")
 export class Appointment extends BaseEntity {
     @PrimaryGeneratedColumn()
     id!: number;
@@ -17,7 +17,7 @@ export class Appointment extends BaseEntity {
     date!: Date;
     
     @Column({ type: "time" })
-    hour!: Date;
+    time!: Date;
     
     @Column()
     created_at!: Date;

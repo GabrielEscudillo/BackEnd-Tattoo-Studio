@@ -8,5 +8,6 @@ const userController = new UserController();
 // Rutas de usuario
 router.post("/newUser", userController.createUser);
 router.get("/users", userController.getAllUsers);
+router.post("/newAppointment", userController.createAppointment)
 
 export default router;
