@@ -25,9 +25,9 @@ export class UserController implements Controller {
           id: true,
           name: true,
           last_name: true,
-        //   address: true,
-        //   email: true,
-        //   phone_number: true,
+          //   address: true,
+          //   email: true,
+          //   phone_number: true,
           role_id: true,
         },
       });
@@ -40,6 +40,19 @@ export class UserController implements Controller {
     } catch (error) {
       res.status(500).json({
         message: "Error while getting users",
+      });
+    }
+  }
+  async createUser(req: Request, res: Response): Promise<void | Response<any>> {
+    try {
+      const data = req.body;
+
+      const userRepository = AppDataSource.getRepository(User);
+      const newUser = await userRepository.save(data);
+      res.status(201).json(newUser);
+    } catch (error) {
+      res.status(500).json({
+        message: "Error while creating user",
       });
     }
   }
