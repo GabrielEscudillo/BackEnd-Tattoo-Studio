@@ -3,6 +3,7 @@ import { Request, Response } from "express";
 import { User } from "../models/User";
 import { AppDataSource } from "../database/data-source";
 import { Appointment } from "../models/Appointment";
+import { CreateAppointmentsRequestBody } from "../types/types";
 
 //----------
 
@@ -60,7 +61,8 @@ export class UserController implements Controller {
     }
   }
   async createAppointment(
-    req: Request,
+    req: Request<{}, {}, CreateAppointmentsRequestBody>,
+ 
     res: Response
   ): Promise<void | Response<any>> {
     try {
