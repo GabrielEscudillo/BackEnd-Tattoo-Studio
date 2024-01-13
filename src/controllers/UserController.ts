@@ -25,10 +25,9 @@ export class UserController implements Controller {
           id: true,
           name: true,
           last_name: true,
-          address: true,
-          email: true,
-          password: true,
-          phone_number: true,
+        //   address: true,
+        //   email: true,
+        //   phone_number: true,
           role_id: true,
         },
       });
