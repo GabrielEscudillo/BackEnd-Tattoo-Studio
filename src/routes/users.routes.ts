@@ -4,8 +4,8 @@ import { sampleMiddleware } from "../middlewares/sampleMiddleware";
 
 //--------------
 const router = express.Router();
-// const UserController = new UserController();
+const userController = new UserController();
 
-router.get("/", UserController.getAllUsers);
+router.get("/", userController.getAllUsers);
 
 export default router;
