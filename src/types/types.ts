@@ -1,6 +1,6 @@
 export interface CreateAppointmentsRequestBody {
     user_id: number;
-    artist_id: number;
+    // artist_id: number;
     date: Date;
     time: string;
 }
@@ -10,7 +10,7 @@ export interface CreateUserRequestBody {
     address: string;
     email: string;  
     password_hash: string;   
-    phone_number: string;   
+    phone_number: number;
  }
 
  export interface CreateArtistRequestBody {
