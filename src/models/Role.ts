@@ -4,6 +4,9 @@ import { User } from "./User";
 
 @Entity("role")
 export class Role extends BaseEntity {
+    map(arg0: (role: any) => any) {
+        throw new Error("Method not implemented.");
+    }
     @PrimaryGeneratedColumn()
     id!: number; 
 

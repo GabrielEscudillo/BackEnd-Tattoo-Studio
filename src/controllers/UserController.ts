@@ -39,26 +39,26 @@ export class UserController implements Controller {
   }
   async getById(req: Request, res: Response): Promise<void | Response<any>> {
     try {
-       const id = +req.params.id;
+      const id = +req.params.id;
 
-       const userRepository = AppDataSource.getRepository(User);
-       const user = await userRepository.findOneBy({
-          id: id,
-       });
+      const userRepository = AppDataSource.getRepository(User);
+      const user = await userRepository.findOneBy({
+        id: id,
+      });
 
-       if (!user) {
-          return res.status(404).json({
-             message: "User not found",
-          });
-       }
+      if (!user) {
+        return res.status(404).json({
+          message: "User not found",
+        });
+      }
 
-       res.status(200).json(user);
+      res.status(200).json(user);
     } catch (error) {
-       res.status(500).json({
-          message: "Error while getting user",
-       });
+      res.status(500).json({
+        message: "Error while getting user",
+      });
     }
- }
+  }
 
   async create(req: Request, res: Response): Promise<void | Response<any>> {
     try {
@@ -71,7 +71,24 @@ export class UserController implements Controller {
       console.error("Error while creating user:", error);
       res.status(500).json({
         message: "Error while creating user",
-        error: error.message, 
+        error: error.message,
+      });
+    }
+  }
+  async update(req: Request, res: Response): Promise<void | Response<any>> {
+    try {
+      const id = +req.params.id;
+      const data = req.body;
+
+      const userRepository = AppDataSource.getRepository(User);
+      await userRepository.update({ id: id }, data);
+
+      res.status(202).json({
+        message: "User updated successfully",
+      });
+    } catch (error) {
+      res.status(500).json({
+        message: "Error while updating user",
       });
     }
   }
