@@ -6,8 +6,7 @@ const router = express.Router();
 const userController = new UserController();
 
 // Rutas de usuario
-router.post("/newUser", userController.createUser);
-router.get("/users", userController.getAllUsers);
-router.post("/newAppointment", userController.createAppointment)
+router.post("/newUser", userController.create);
+router.get("/users", userController.getAll);
 
 export default router;

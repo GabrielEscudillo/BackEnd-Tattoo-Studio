@@ -30,7 +30,7 @@ export class User extends BaseEntity {
     email!: string;
 
     @Column()
-    password!: string;
+    password_hash!: string;
 
     @Column()
     phone_number!: number;
