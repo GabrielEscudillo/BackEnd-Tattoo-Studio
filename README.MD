@@ -2,7 +2,6 @@
 
 <h1 align="center"> Tattoink </h1>
  
-<div style="text-align: center;"> #Backend app </div>
 
 ## Contenido del proyecto 
 
@@ -10,13 +9,12 @@
   <summary>Contentido 📝</summary>
 <ol>
   <a href="#"></a></li>
-  <li><a href="#objetivo">Objectivos</a></li>
-  <li><a href="#Descripción">Descripción</a></li> 
-  <li><a href="#Tecnologías utilizadas">Tecnologías utilizadas</a></li>
-  <li><a href="#Diagrama DB ">Diagrama DB</a></li>
+  <li><a href="#objetivos">Objectivos</a></li>
+  <li><a href="#descripción">Descripción</a></li> 
+  <li><a href="#tecnologíasutilizadas">Tecnologías utilizadas</a></li>
+  <li><a href="#diagrama DB ">Diagrama DB</a></li>
   <li><a href="#endpoints">Endpoints</a></li>
   <li><a href="#futuras funcionalidades">Futuras funcionalidades</a></li>
-  <li><a href="#contributions">Contributions</a></li>
   <li><a href="#acknowledgments">Acknowledgments</a></li>
   <li><a href="#contacto">Contacto</a></li>
 </ol>
@@ -26,7 +24,7 @@
 
 Este proyecto requería una API funcional con una base de datos que contara con algunos de los tipos de relaciones que existen.
 
-## Descripcion
+## Descripción
 
 Se ha desarrollado un sistema backend para respaldar las operaciones de un estudio de tatuajes, el cual permitirá al estudio registrar y gestionar usuarios, simplificando el proceso de inicio de sesión tanto para clientes como para artistas. Además, posibilitará la creación y seguimiento de nuevas citas para clientes y artistas, mejorando así la eficiencia en la programación de tatuajes.
 
@@ -174,20 +172,29 @@ Por otro lado, cada cliente puede reservar una cita con el tatuador de su prefer
 <input type="checkbox"> Permitir que puedan añadir más productos en una misma cita. 
 
   
-## Acknowledgments
+## Agradecimientos
 
-<!-- This project has been made possible thanks to the hard work of my teachers Daniel Tarazona and David Ochando, who not only share their knowledge but also instill enthusiasm in us for what we are developing. -->
-
-  
-<!-- <strong>Daniel Tarazona</strong><br>
-<a href="https://github.com/datata">
+"Quiero expresar mi más sincero agradecimiento a mis compañeros. Aunque trabajamos en proyectos individuales, su apoyo constante y disposición para compartir ideas fueron fundamentales para superar los desafíos que surgieron durante el desarrollo. Juntos, demostramos un compromiso excepcional, creatividad inigualable y una colaboración sin igual.
+ 
+<strong>Erika Orlando</strong><br>
+<a href="https://github.com/AkireOrl">
 <img src="https://img.shields.io/badge/github-24292F?style=for-the-badge&logo=github&logoColor=red" style="margin-right: 60px;" />
 </a>
   
-<strong>David Ochando</strong><br>
-<a href="https://github.com/Dave86dev">
+<strong>Reynaldo Muñoz</strong><br>
+<a href="https://github.com/ReynaldoMunozF">
 <img src="https://img.shields.io/badge/github-24292F?style=for-the-badge&logo=github&logoColor=white" style="margin-right: 0px;" />
-</a>  -->
+</a> 
+
+<strong>Antonio Yepez</strong><br>
+<a href="https://github.com/kxlde">
+<img src="https://img.shields.io/badge/github-24292F?style=for-the-badge&logo=github&logoColor=white" style="margin-right: 0px;" />
+</a> 
+
+<strong>Hector Soriano</strong><br>
+<a href="https://github.com/HSoriano99">
+<img src="https://img.shields.io/badge/github-24292F?style=for-the-badge&logo=github&logoColor=white" style="margin-right: 0px;" />
+</a> 
   
 ## Author
 
