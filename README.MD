@@ -1,26 +1,16 @@
 ###### 
 
-<h1 align="center"> 💥 Backend Tattoo Studio 💥</h1>
+<h1 align="center"> Tattoink </h1>
  
-<div style="text-align: center;"><img src= "./assets/tattoo_logo.jpg" width="800"/></div>
- 
-# Welcome to my  backend app
-Developed as part of the fourth project in the Full Stack Developer Bootcamp at Geekshubs Academy.
+<div style="text-align: center;"> #Backend app </div>
 
-<div style="text-align: center;">
-    <img src="./assets/GeeksHubs-Academy-Card.png" style="max-height: 120px; width: 600;" />
-</div>
-
-
-<br>
-
-## Project content 
+## Contenido del proyecto 
 
 <details>
-  <summary>Contents 📝</summary>
+  <summary>Contentido 📝</summary>
 <ol>
   <a href="#"></a></li>
-  <li><a href="#objetive">Objective</a></li>
+  <li><a href="#objetive">Objectivos</a></li>
   <li><a href="#about-the-project">About the Project</a></li> 
   <li><a href="#stack">Stack</a></li>
   <li><a href="#diagrama-db">Diagram Database</a></li>
@@ -29,25 +19,25 @@ Developed as part of the fourth project in the Full Stack Developer Bootcamp at 
   <li><a href="#validations">Validations</a></li>
   <li><a href="#future-functionalities">Future Functionalities</a></li>
   <li><a href="#contributions">Contributions</a></li>
-  <li><a href="#license">License</a></li>  
   <li><a href="#acknowledgments">Acknowledgments</a></li>
   <li><a href="#contact">Contact</a></li>
   <li><a href="#images">Imagenes</a></li>
 </ol>
-
 </details>
 
-## Objetive
-This project required a functional API connected to a database with at least a one-to-many relationship and a many-to-many relationship.
+## Objetivos
+
+
+<!-- This project required a functional API connected to a database with at least a one-to-many relationship and a many-to-many relationship. -->
 
 <div style="text-align: center;">
     <img src="./assets/diagram.png" style="width: 500;" />
 </div>
 
-## About the project
-I have decided to develop a backend system to support a tattoo shop. This system will allow the shop to register and manage users, making the login process easier for both customers and employees. Additionally, the system will enable the creation and tracking of new appointments for customers and artists, thus improving efficiency in tattoo scheduling.
+## Descripción
+<!-- I have decided to develop a backend system to support a tattoo shop. This system will allow the shop to register and manage users, making the login process easier for both customers and employees. Additionally, the system will enable the creation and tracking of new appointments for customers and artists, thus improving efficiency in tattoo scheduling.
 
-The system will also include advanced features for the superadministrator, who will have the ability to manage roles, delete users, and track all active appointments in the shop. This solution will provide a more organized and effective workflow for the management of appointments and users, enhancing the experience for both shop staff and customers.  
+The system will also include advanced features for the superadministrator, who will have the ability to manage roles, delete users, and track all active appointments in the shop. This solution will provide a more organized and effective workflow for the management of appointments and users, enhancing the experience for both shop staff and customers.   -->
 
 <div style="text-align: center;"><img src= "./assets/vs_index_json.png"/></div>
 
@@ -68,11 +58,11 @@ The system will also include advanced features for the superadministrator, who w
  </div>
 
 ## Diagrama DB 
-In the diagram, we can observe that each user can only have one role, including 'user' for store customers, 'admin' for employees, and 'superadmin' for those who acquire the role of managing the application, possibly the store manager.
+<!-- In the diagram, we can observe that each user can only have one role, including 'user' for store customers, 'admin' for employees, and 'superadmin' for those who acquire the role of managing the application, possibly the store manager.
 
 On the other hand, each customer can make a reservation, and thanks to the validations, it has been ensured that they do not overlap with any other customer if the tattoo artist already has a reservation for that date or time, preventing the reservation system from becoming overloaded.
 
-The tattoo artist can track the appointments assigned to them, with the ability to paginate them and view detailed information for each appointment.
+The tattoo artist can track the appointments assigned to them, with the ability to paginate them and view detailed information for each appointment. -->
 
 <div style="text-align: center;">
  <img src= "./assets/diagram.png" style="height: 600"/>
@@ -250,81 +240,6 @@ The tattoo artist can track the appointments assigned to them, with the ability 
 
 </details>
 
-<details>
-<summary>SUPER ADMIN ENDPOINTS</summary>
-
-- SUPER ADMIN
-    - GET ALL USERS
-
-            GET http://localhost:4000/user/all?skip=5&page=1
-        body:
-        ``` js
-            {
-                "user": "NewUser",
-                "email": "NewUser@NewUser.com",
-                "password": "princes1234@"
-            }
-        ```
-         - Auth: ` Enter the token to get all the users.`
-
-    - CREATE WORKER
-
-            POST http://localhost:4000/user/createWorker
-        body:
-        ``` js
-            {
-               "full_name": "worker4",
-                "email": "worker4@gmail.com",
-                "password": "Aa1234@",
-                "phone_number": 24364066 
-            }
-        ```
-         - Auth: `Enter the token to create the worker.`
-
-    - DELETE USERS BY SUPER ADMIN
-
-            DELETE http://localhost:4000/user/createWorker
-        body:
-        ``` js
-            {
-               "id": 34
-            }
-        ```
-        - Auth: `Enter the token to delete any user.`
-
-    - GET ALL APPOINTMENT BY SUPER ADMIN
-
-            GET http://localhost:4000/appointment/AllAppointmentsSuper?skip=5&page=1
-         
-        ```
-    - Auth: ` Enter the token to get all the appointments.`
-
-    - CHANGE ROLE BY SUPER ADMIN
-
-            PUT http://localhost:4000/user/assignRole
-        body:
-        ``` js
-            {
-             "id":45, 
-             "role_id": 2 
-            }
-        ```
-         - Auth: `Enter the token to change the role.`
-
-</details>
-
-
-## Validations
-
-<input type="checkbox" checked>  <strong>validateDate</strong>:  Checks for the existence of a date, ensures it's a string, and has a valid date format.<br>
-<input type="checkbox" checked>  <strong>validateEmail </strong>: Verifies the existence of an email, checks that it's a string, not exceeding 100 characters, and follows the email structure.<br>
-<input type="checkbox" checked>  <strong>validateString</strong>: Ensures the existence of a string, checks it's not an empty string, and doesn't exceed the specified character limit.<br>
-<input type="checkbox" checked>  <strong>validateNumber</strong>: Validates the existence of a number and ensures it doesn't exceed the specified digit limit.<br>
-<input type="checkbox" checked>  <strong>validateShift</strong>:  Validates the existence of a shift, checks that it's a string, and its value is valid for the specified enum.<br>
-<input type="checkbox" checked>  <strong>validatePassword</strong>: Checks for the existence of a password, ensures it's a string, not exceeding 100 characters, and includes at least one lowercase letter, one uppercase letter, one symbol, and one number.<br>
-<input type="checkbox" checked>  <strong>validateAvailableDate</strong>: Checks whether the worker is available on the specified day and shift to schedule an appointment.<br>
-
- 
 
 ## Future functionalities
 <!-- 
@@ -340,7 +255,7 @@ The tattoo artist can track the appointments assigned to them, with the ability 
 
 
 
-## Contributions
+<!-- ## Contributions
 Suggestions and contributions are always welcome. 
 
 You can do this in two ways:
@@ -359,11 +274,11 @@ You can do this in two ways:
         ```
         $ git push origin feature/username-improvement
         ```
-    - Open a Pull Request.
+    - Open a Pull Request. -->
 
-## License
+<!-- ## License
 
-This project is under the MIT License. Please refer to the LICENSE file for more information.
+This project is under the MIT License. Please refer to the LICENSE file for more information. -->
 
   
 ## Acknowledgments
