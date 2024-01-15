@@ -8,7 +8,8 @@ const appointmentController = new AppointmentController();
 router.get("/get", appointmentController.getAll)
 router.post("/newAppointment", appointmentController.create)
 router.get("/:id", appointmentController.getById)
-router.patch("/:id", appointmentController.update);
+router.patch("/:id", appointmentController.updateAppointment);
+router.delete("/:id", appointmentController.deleteAppointment);
 
 export default router;
 
