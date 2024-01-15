@@ -1,100 +1,6 @@
-// import { Request, Response } from "express";
-// import { User } from "../models/User";
-// import { AppDataSource } from "../database/data-source";
-
-// //----------
-
-// export class UserController  {
-//   async getAll(req: Request, res: Response): Promise<void | Response<any>> {
-//     try {
-//       const userRepository = AppDataSource.getRepository(User);
-
-//       let { page, skip } = req.query;
-
-//       let currentPage = page ? +page : 1;
-//       let itemsPerPage = skip ? +skip : 10;
-
-//       const [allUsers, count] = await userRepository.findAndCount({
-//         skip: (currentPage - 1) * itemsPerPage,
-//         take: itemsPerPage,
-//         select: {
-//           id: true,
-//           name: true,
-//           last_name: true,
-//           role_id: true,
-//         },
-//       });
-//       res.status(200).json({
-//         count,
-//         skip: itemsPerPage,
-//         page: currentPage,
-//         results: allUsers,
-//       });
-//     } catch (error) {
-//       res.status(500).json({
-//         message: "Error while getting users",
-//       });
-//     }
-//   }
-//   async getById(req: Request, res: Response): Promise<void | Response<any>> {
-//     try {
-//       const id = +req.params.id;
-
-//       const userRepository = AppDataSource.getRepository(User);
-//       const user = await userRepository.findOneBy({
-//         id: id,
-//       });
-
-//       if (!user) {
-//         return res.status(404).json({
-//           message: "User not found",
-//         });
-//       }
-
-//       res.status(200).json(user);
-//     } catch (error) {
-//       res.status(500).json({
-//         message: "Error while getting user",
-//       });
-//     }
-//   }
-
-//   async create(req: Request, res: Response): Promise<void | Response<any>> {
-//     try {
-//       const data = req.body;
-
-//       const userRepository = AppDataSource.getRepository(User);
-//       const newUser = await userRepository.save(data);
-//       res.status(201).json(newUser);
-//     } catch (error: any) {
-//       console.error("Error while creating user:", error);
-//       res.status(500).json({
-//         message: "Error while creating user",
-//         error: error.message,
-//       });
-//     }
-//   }
-//   async update(req: Request, res: Response): Promise<void | Response<any>> {
-//     try {
-//       const id = +req.params.id;
-//       const data = req.body;
-
-//       const userRepository = AppDataSource.getRepository(User);
-//       await userRepository.update({ id: id }, data);
-
-//       res.status(202).json({
-//         message: "User updated successfully",
-//       });
-//     } catch (error) {
-//       res.status(500).json({
-//         message: "Error while updating user",
-//       });
-//     }
-//   }
-// }
-
 import { Request, Response } from "express";
 import {
+  CreateArtistRequestBody,
   CreateUserRequestBody,
   LoginUserRequestBody,
   TokenData,
@@ -194,11 +100,11 @@ export class UserController {
 
       // Generar token
 
-      const role = user.role.map((role) => role.role_name);
+      // const role = user.role.map((role) => role.role_name);
 
       const tokenPayload: TokenData = {
         userId: user.id?.toString() as string,
-        userRoles: [],
+        userRoles: ["customer", "artist", "super_admin"],
       };
 
       const token = jwt.sign(tokenPayload, "123", {
@@ -252,6 +158,35 @@ export class UserController {
     } catch (error) {
       res.status(500).json({
         message: "Error while updating user",
+      });
+    }
+  }
+  async createArtist(
+    req: Request<{}, {}, CreateArtistRequestBody>,
+    res: Response
+  ): Promise<void | Response<any>> {
+    const { user_id, portfolio } =
+      req.body;
+
+    const artistRepository = AppDataSource.getRepository(Artist);
+    //    const studentRepository = AppDataSource.getRepository(Student);
+
+    try {
+      // Crear nuevo usuario
+      const newArtist = artistRepository.create({
+      // ,
+      // portfolio,
+        // role: [UserRoles.ARTIST]
+      });
+      await artistRepository.save(newArtist);
+      res.status(StatusCodes.CREATED).json({
+        message: "Register successfully",
+      });
+    } catch (error: any) {
+      console.error("Error while register:", error);
+      res.status(500).json({
+        message: "Error while register",
+        error: error.message,
       });
     }
   }

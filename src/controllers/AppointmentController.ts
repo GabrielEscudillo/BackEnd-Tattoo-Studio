@@ -9,14 +9,15 @@ import { Artist } from "../models/Artist";
 export class AppointmentController {
   async getAll(req: Request, res: Response): Promise<void | Response<any>> {
     try {
-        const AppointmentRepository = AppDataSource.getRepository(Appointment);
-  
-        let { page, skip } = req.query;
-  
-        let currentPage = page ? +page : 1;
-        let itemsPerPage = skip ? +skip : 10;
-  
-        const [allAppointments, count] = await AppointmentRepository.findAndCount({
+      const AppointmentRepository = AppDataSource.getRepository(Appointment);
+
+      let { page, skip } = req.query;
+
+      let currentPage = page ? +page : 1;
+      let itemsPerPage = skip ? +skip : 10;
+
+      const [allAppointments, count] = await AppointmentRepository.findAndCount(
+        {
           skip: (currentPage - 1) * itemsPerPage,
           take: itemsPerPage,
           select: {
@@ -26,19 +27,20 @@ export class AppointmentController {
             date: true,
             time: true,
           },
-        });
-        res.status(200).json({
-          count,
-          skip: itemsPerPage,
-          page: currentPage,
-          results: allAppointments,
-        });
-      } catch (error) {
-        res.status(500).json({
-          message: "Error while getting appointments",
-        });
-      }
+        }
+      );
+      res.status(200).json({
+        count,
+        skip: itemsPerPage,
+        page: currentPage,
+        results: allAppointments,
+      });
+    } catch (error) {
+      res.status(500).json({
+        message: "Error while getting appointments",
+      });
     }
+  }
   async getById(req: Request, res: Response): Promise<void | Response<any>> {
     try {
       const id = +req.params.id;
@@ -80,20 +82,19 @@ export class AppointmentController {
   }
   async update(req: Request, res: Response): Promise<void | Response<any>> {
     try {
-       const id = +req.params.id;
-       const data = req.body;
+      const id = +req.params.id;
+      const data = req.body;
 
-       const appointmentRepository = AppDataSource.getRepository(Appointment);
-       await appointmentRepository.update({ id: id }, data);
+      const appointmentRepository = AppDataSource.getRepository(Appointment);
+      await appointmentRepository.update({ id: id }, data);
 
-       res.status(202).json({
-          message: "Appointment updated successfully",
-       });
+      res.status(202).json({
+        message: "Appointment updated successfully",
+      });
     } catch (error) {
-       res.status(500).json({
-          message: "Error while updating appointment",
-       });
+      res.status(500).json({
+        message: "Error while updating appointment",
+      });
     }
- }
-
+  }
 }

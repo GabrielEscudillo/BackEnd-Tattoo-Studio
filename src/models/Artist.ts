@@ -4,7 +4,7 @@ import { Design } from "./Design";
 import { Appointment } from "./Appointment";
 
 
-@Entity("artist")
+@Entity("artists")
 export class Artist extends BaseEntity{
     @PrimaryGeneratedColumn()
     id!: number;

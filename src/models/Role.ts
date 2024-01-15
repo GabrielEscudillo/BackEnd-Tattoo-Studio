@@ -1,12 +1,10 @@
-import { BaseEntity, Column, Entity, PrimaryGeneratedColumn, OneToMany } from "typeorm"
+import { Column, Entity, PrimaryGeneratedColumn, OneToMany } from "typeorm"
 import { User } from "./User";
 
 
-@Entity("role")
+@Entity("roles")
 export class Role {
-    map(arg0: (role: any) => any) {
-        throw new Error("Method not implemented.");
-    }
+
     @PrimaryGeneratedColumn()
     id!: number; 
 

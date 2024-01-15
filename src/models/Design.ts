@@ -2,7 +2,7 @@ import { BaseEntity, Column, Entity, PrimaryGeneratedColumn, ManyToOne, JoinColu
 import { Artist } from "./Artist";
 
 
-@Entity()
+@Entity("designs")
 export class Design extends BaseEntity {
     @PrimaryGeneratedColumn()
     id!: number;
