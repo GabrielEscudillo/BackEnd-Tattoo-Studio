@@ -3,7 +3,7 @@ import { User } from "./User";
 
 
 @Entity("role")
-export class Role extends BaseEntity {
+export class Role {
     map(arg0: (role: any) => any) {
         throw new Error("Method not implemented.");
     }

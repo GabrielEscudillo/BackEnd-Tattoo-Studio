@@ -14,9 +14,8 @@ export interface CreateUserRequestBody {
  }
 
  export interface CreateArtistRequestBody {
-   name: string;
-   surname: string;
-   portfolio: string;
+   user_id: string;
+//    portfolio: string;
 }
 
  export interface LoginUserRequestBody {

@@ -1,12 +1,12 @@
 import { Request, Response } from "express";
 import { Appointment } from "../models/Appointment";
 import { AppDataSource } from "../database/data-source";
-import { Controller } from "./Controller";
 import { CreateAppointmentsRequestBody } from "../types/types";
+import { Artist } from "../models/Artist";
 
 //----------------------------------------------------------------------
 
-export class AppointmentController implements Controller {
+export class AppointmentController {
   async getAll(req: Request, res: Response): Promise<void | Response<any>> {
     try {
         const AppointmentRepository = AppDataSource.getRepository(Appointment);
@@ -95,4 +95,5 @@ export class AppointmentController implements Controller {
        });
     }
  }
+
 }
