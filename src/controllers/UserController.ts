@@ -47,6 +47,53 @@ export class UserController {
       });
     }
   }
+
+  async createArtist(
+    req: Request<{}, {},CreateUserRequestBody>,
+    res: Response
+  ): Promise<void | Response<any>> {
+    const { name, last_name, address, email, phone_number, password_hash } =
+      req.body;
+  
+    const userRepository = AppDataSource.getRepository(User);
+    
+  
+    try {
+      // Crear nuevo usuario
+      const newUser = userRepository.create({
+        name,
+        last_name,
+        address,
+        email,
+        phone_number,
+        password_hash: bcrypt.hashSync(password_hash, 10),
+        role: [UserRoles.ARTIST],
+      });
+      await userRepository.save(newUser);
+  
+      //Crear nuevo artista asociado al usuario
+      
+       if (newUser.role.includes(UserRoles.ARTIST)) { 
+        // Si es un artista, también crea una entrada en la tabla de artistas. 
+        const artistRepository = AppDataSource.getRepository(Artist); 
+        const newArtist = artistRepository.create({ 
+          user_id: newUser.id, // Asocia el nuevo artista con el usuario recién creado. 
+          portfolio: "https://"
+        }); 
+   
+        await artistRepository.save(newArtist); 
+      } 
+   
+      res.status(201).json(newUser); 
+    } catch (error: any) { 
+      console.error("Error while creating artist:", error); 
+      res.status(500).json({ 
+        message: "Error while creating artist", 
+        error: error.message, 
+      }); 
+    } 
+  }
+ 
   async login(
     req: Request<{}, {}, LoginUserRequestBody>,
     res: Response
@@ -161,35 +208,7 @@ export class UserController {
       });
     }
   }
-  async createArtist(
-    req: Request<{}, {}, CreateArtistRequestBody>,
-    res: Response
-  ): Promise<void | Response<any>> {
-    const { user_id, portfolio } =
-      req.body;
 
-    const artistRepository = AppDataSource.getRepository(Artist);
-    //    const studentRepository = AppDataSource.getRepository(Student);
-
-    try {
-      // Crear nuevo usuario
-      const newArtist = artistRepository.create({
-      // ,
-      // portfolio,
-        // role: [UserRoles.ARTIST]
-      });
-      await artistRepository.save(newArtist);
-      res.status(StatusCodes.CREATED).json({
-        message: "Register successfully",
-      });
-    } catch (error: any) {
-      console.error("Error while register:", error);
-      res.status(500).json({
-        message: "Error while register",
-        error: error.message,
-      });
-    }
-  }
   async getAllArtists(req: Request, res: Response): Promise<void | Response<any>> {
     try {
       const ArtistRepository = AppDataSource.getRepository(Artist);

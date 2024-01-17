@@ -45,8 +45,8 @@ export class AppointmentController {
     try {
       const id = +req.params.id;
       const appointmentRepository = AppDataSource.getRepository(Appointment);
-      const appointments = await appointmentRepository.findOneBy({
-        id: id,
+      const appointments = await appointmentRepository.findBy({
+        user_id: id,
       });
 
       if (!appointments) {
@@ -62,6 +62,29 @@ export class AppointmentController {
       });
     }
   }
+
+  async getByArtist(req: Request, res: Response): Promise<void | Response<any>> {
+    try {
+       const id = +req.params.id;
+       const appointmentRepository = AppDataSource.getRepository(Appointment);
+       const appointments = await appointmentRepository.findBy({
+          artist_id: id,
+       });
+
+       if (!appointments) {
+          return res.status(404).json({
+             message: "Appointment not found",
+          });
+       }
+
+       res.status(200).json(appointments);
+    } catch (error) {
+       res.status(500).json({
+          message: "Error while getting appointments",
+       });
+    }
+ }
+
   async create(
     req: Request<{}, {}, CreateAppointmentsRequestBody>,
 
@@ -71,7 +94,9 @@ export class AppointmentController {
       const data = req.body;
       const appointmentRepository = AppDataSource.getRepository(Appointment);
       const newAppointment = await appointmentRepository.save(data);
-      res.status(201).json(newAppointment);
+      res.status(201).json({
+        message: "Appointment created successfully",
+      });
     } catch (error: any) {
       console.error("Error while creating Appointment:", error);
       res.status(500).json({

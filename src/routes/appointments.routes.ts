@@ -7,7 +7,8 @@ const appointmentController = new AppointmentController();
 
 router.get("/get", appointmentController.getAll)
 router.post("/newAppointment", appointmentController.create)
-router.get("/:id", appointmentController.getById)
+router.get("/mysessions/:id", appointmentController.getById)
+router.get("/myappointments/:id", appointmentController.getByArtist)
 router.patch("/:id", appointmentController.updateAppointment);
 router.delete("/:id", appointmentController.deleteAppointment);
 

@@ -21,16 +21,13 @@ export class Artist extends BaseEntity{
     @Column()
     updated_at!: Date;
 
-    @OneToMany(() => User, (user) => user.role)
-    users!: User[];
-
     @OneToMany(() => Design, (design) => design)
     design!: Design[];
 
     @OneToMany(() => Appointment, (appointment) => appointment.artist)
     customerAppointments!: Appointment[];
 
-    @OneToOne(() => Artist, (artist) => artist.users)
-    @JoinColumn ({name: "artist_id"})
-    artist?: Artist;
+    @OneToOne(() => User, user => user.artist)
+    @JoinColumn({ name: "user_id" })
+    users!: User;
 }

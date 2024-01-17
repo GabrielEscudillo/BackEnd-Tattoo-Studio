@@ -46,8 +46,12 @@ export class User {
 
     @ManyToOne(() => Role, (role) => role.users)
     @JoinColumn ({name: "role_id"})
-    role!: Role;
+    role!: Role[];
 
+
+    @OneToOne(() => Artist, (artists) => artists.users)
+    artist?: Artist;
+    
     @OneToMany(() => Appointment, (appointment) => appointment.user_id)
     customerAppointments!: Appointment[];
 }
