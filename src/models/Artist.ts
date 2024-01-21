@@ -5,15 +5,15 @@ import { Appointment } from "./Appointment";
 
 
 @Entity("artists")
-export class Artist extends BaseEntity{
+export class Artist {
     @PrimaryGeneratedColumn()
     id!: number;
 
     @Column()
-    portfolio!: string;
+    user_id!: number;
 
     @Column()
-    user_id!: number;
+    portfolio?: string;
 
     @Column()
     created_at!: Date;

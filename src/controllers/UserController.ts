@@ -1,13 +1,11 @@
 import { Request, Response } from "express";
 import {
-  CreateArtistRequestBody,
   CreateUserRequestBody,
   LoginUserRequestBody,
   TokenData,
 } from "../types/types";
 import { User } from "../models/User";
 import bcrypt from "bcrypt";
-import { UserRoles } from "../constants/UserRoles";
 import { AppDataSource } from "../database/data-source";
 import { Artist } from "../models/Artist";
 import { StatusCodes } from "http-status-codes";
@@ -22,10 +20,8 @@ export class UserController {
       req.body;
 
     const userRepository = AppDataSource.getRepository(User);
-    //    const studentRepository = AppDataSource.getRepository(Student);
 
     try {
-      // Crear nuevo usuario
       const newUser = userRepository.create({
         name,
         last_name,
@@ -48,52 +44,6 @@ export class UserController {
     }
   }
 
-  async createArtist(
-    req: Request<{}, {},CreateUserRequestBody>,
-    res: Response
-  ): Promise<void | Response<any>> {
-    const { name, last_name, address, email, phone_number, password_hash } =
-      req.body;
-  
-    const userRepository = AppDataSource.getRepository(User);
-    
-  
-    try {
-      // Crear nuevo usuario
-      const newUser = userRepository.create({
-        name,
-        last_name,
-        address,
-        email,
-        phone_number,
-        password_hash: bcrypt.hashSync(password_hash, 10),
-        role: [UserRoles.ARTIST],
-      });
-      await userRepository.save(newUser);
-  
-      //Crear nuevo artista asociado al usuario
-      
-       if (newUser.role.includes(UserRoles.ARTIST)) { 
-        // Si es un artista, también crea una entrada en la tabla de artistas. 
-        const artistRepository = AppDataSource.getRepository(Artist); 
-        const newArtist = artistRepository.create({ 
-          user_id: newUser.id, // Asocia el nuevo artista con el usuario recién creado. 
-          portfolio: "https://"
-        }); 
-   
-        await artistRepository.save(newArtist); 
-      } 
-   
-      res.status(201).json(newUser); 
-    } catch (error: any) { 
-      console.error("Error while creating artist:", error); 
-      res.status(500).json({ 
-        message: "Error while creating artist", 
-        error: error.message, 
-      }); 
-    } 
-  }
- 
   async login(
     req: Request<{}, {}, LoginUserRequestBody>,
     res: Response
@@ -109,7 +59,6 @@ export class UserController {
           message: "Email or password is required",
         });
       }
-
       // Encontrar un usuario por email
       const user = await userRepository.findOne({
         where: {
@@ -146,8 +95,6 @@ export class UserController {
       }
 
       // Generar token
-
-      // const role = user.role.map((role) => role.role_name);
 
       const tokenPayload: TokenData = {
         userId: user.id?.toString() as string,
@@ -209,7 +156,10 @@ export class UserController {
     }
   }
 
-  async getAllArtists(req: Request, res: Response): Promise<void | Response<any>> {
+  async getAllArtists(
+    req: Request,
+    res: Response
+  ): Promise<void | Response<any>> {
     try {
       const ArtistRepository = AppDataSource.getRepository(Artist);
 
@@ -238,5 +188,4 @@ export class UserController {
       });
     }
   }
-
 }

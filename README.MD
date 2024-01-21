@@ -98,7 +98,7 @@ Por otro lado, cada cliente puede reservar una cita con el tatuador de su prefer
 
   - PROFILE
 
-          GET http://localhost:4000/user/:id
+          GET http://localhost:3000/api/:id
 
     - Insertamos el ID del user para que nos muestre todos los datos
 
@@ -167,13 +167,13 @@ Por otro lado, cada cliente puede reservar una cita con el tatuador de su prefer
         }
     ```
 
-  - GET ALL APPOINTMENTS BY USER
+  - GET ALL APPOINTMENTS BY CUSTOMER
 
-          GET http://localhost:4000/appointment/getAllAppointment?skip=10&page=1
+          GET http://localhost:3000/api/appointments/mysessions/:id
 
-  - GET ALL APPOINTMENTS BY WORKER
+  - GET ALL APPOINTMENTS BY ARTIST
 
-          GET http://localhost:4000/appointment/getAllArtist?skip=5&page=1
+          GET http://localhost:3000/api/appointments/myappointments/:id
 
 </details>
 

@@ -1,5 +1,4 @@
 import { 
-    BaseEntity, 
     Entity, 
     Column, 
     PrimaryGeneratedColumn, 

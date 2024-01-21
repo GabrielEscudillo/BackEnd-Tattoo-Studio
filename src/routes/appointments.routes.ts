@@ -4,7 +4,6 @@ import { auth } from "../middlewares/auth";
 import { isSuperAdmin } from "../middlewares/isSuperAdmin";
 import { isArtist } from "../middlewares/isArtist";
 
-// ----
 const router = express.Router();
 const appointmentController = new AppointmentController();
 
