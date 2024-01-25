@@ -20,3 +20,4 @@ export class Role {
     users!: User[];
 
 }
+

@@ -35,9 +35,6 @@ export class User {
     phone_number!: number;
 
     @Column()
-    role_id!: number;
-
-    @Column()
     created_at!: Date;
 
     @Column()
@@ -45,10 +42,9 @@ export class User {
 
     @ManyToOne(() => Role, (role) => role.users)
     @JoinColumn ({name: "role_id"})
-    role!: Role[];
+    role!: Role;
 
-
-    @OneToOne(() => Artist, (artists) => artists.users)
+    @OneToOne(() => Artist, (artists) => artists.user)
     artist?: Artist;
     
     @OneToMany(() => Appointment, (appointment) => appointment.user_id)

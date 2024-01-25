@@ -10,9 +10,6 @@ export class Artist {
     id!: number;
 
     @Column()
-    user_id!: number;
-
-    @Column()
     portfolio?: string;
 
     @Column()
@@ -29,5 +26,5 @@ export class Artist {
 
     @OneToOne(() => User, user => user.artist)
     @JoinColumn({ name: "user_id" })
-    users!: User;
+    user!: User;
 }

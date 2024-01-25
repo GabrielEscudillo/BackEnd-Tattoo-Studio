@@ -17,3 +17,5 @@ router.delete("/:id", auth, isArtist, appointmentController.deleteAppointment);
 export default router;
 
 
+
+

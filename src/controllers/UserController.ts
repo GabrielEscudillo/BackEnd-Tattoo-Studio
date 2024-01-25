@@ -10,6 +10,7 @@ import { AppDataSource } from "../database/data-source";
 import { Artist } from "../models/Artist";
 import { StatusCodes } from "http-status-codes";
 import jwt from "jsonwebtoken";
+import { UserRoles } from "../constants/UserRoles";
 
 export class UserController {
   async register(
@@ -156,6 +157,48 @@ export class UserController {
     }
   }
 
+  async createArtist( 
+    req: Request<{}, {}, CreateUserRequestBody>, 
+    res: Response 
+  ): Promise<void | Response<any>> { 
+    const { name, last_name, address, email, phone_number, password_hash } = req.body; 
+    const userRepository = AppDataSource.getRepository(User); 
+    try { 
+      console.log('Creando usuario') 
+      // Crear nuevo usuario 
+      const dataUser: User = { 
+        name, 
+        last_name, 
+        address, 
+        email, 
+        phone_number, 
+        password_hash: bcrypt.hashSync(password_hash, 10), 
+        role: UserRoles.ARTIST, 
+        created_at: new Date, 
+        updated_at: new Date, 
+        customerAppointments: [] 
+      }; 
+      console.log("1") 
+      const newUser = await userRepository.save(dataUser); 
+      // Crear nuevo artista asociado al usuario 
+        const artistRepository = AppDataSource.getRepository(Artist); 
+        const newArtist = await artistRepository.save({ 
+          user: newUser, 
+          portfolio: "https://",  // Utiliza el valor proporcionado o un valor predeterminado 
+        }); 
+        // Utilizar el método save para agregar un nuevo artista 
+        // await artistRepository.save(newArtist); 
+      console.log("2") 
+      res.status(201).json(newArtist); 
+    } catch (error: any) { 
+      console.error("Error while creating artist:", error); 
+      res.status(500).json({ 
+        message: "Error while creating artist", 
+        error: error.message, 
+      }); 
+    } 
+  }
+
   async getAllArtists(
     req: Request,
     res: Response
@@ -173,7 +216,7 @@ export class UserController {
         take: itemsPerPage,
         select: {
           id: true,
-          user_id: true,
+          // user_id: true,
         },
       });
       res.status(200).json({
