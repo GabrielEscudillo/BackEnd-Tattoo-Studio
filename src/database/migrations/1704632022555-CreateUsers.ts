@@ -22,39 +22,33 @@ export class CreateUsers1704632022555 implements MigrationInterface {
                         name: "name",
                         type: "varchar",
                         length: "255",
-                        isNullable: true
                     },
                     {
                         name: "last_name",
                         type: "varchar",
                         length: "255",
-                        isNullable: true
                     },
                     {
                         name: "address",
                         type: "varchar",
                         length: "255",
-                        isNullable: true
                     },
                     {
                         name: "email",
                         type: "varchar",
                         length: "100",
                         isUnique: true,
-                        isNullable: true
                     },
                     {
                         name: "password_hash",
                         type: "varchar",
                         length: "100",
-                        isNullable: true
                     },
                     {
                         name: "phone_number",
                         type: "int",
                         length: "20",
                         isUnique: true,
-                        isNullable: true
                     },
                     {
                         name: "created_at",
@@ -84,4 +78,3 @@ export class CreateUsers1704632022555 implements MigrationInterface {
     }
       public async down(queryRunner: QueryRunner): Promise<void> {}
     }
-    

@@ -30,8 +30,9 @@ export class UserController {
         email,
         phone_number,
         password_hash: bcrypt.hashSync(password_hash, 10),
-        // role: [UserRoles.CUSTOMER]
+        role: UserRoles.CUSTOMER
       });
+      
       await userRepository.save(newUser);
       res.status(StatusCodes.CREATED).json({
         message: "Register successfully",
