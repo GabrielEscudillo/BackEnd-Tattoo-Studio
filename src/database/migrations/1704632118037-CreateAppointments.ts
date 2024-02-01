@@ -16,12 +16,10 @@ export class CreateAppointments1704632118037 implements MigrationInterface {
                     {
                         name: "user_id",
                         type: "int",
-                        isNullable: true,
                     },
                     {
                         name: "artist_id",
                         type: "int",
-                        isNullable: true,
                     },
                     {
                         name: "date",
