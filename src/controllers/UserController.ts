@@ -50,13 +50,12 @@ export class UserController {
     req: Request<{}, {}, LoginUserRequestBody>,
     res: Response
   ): Promise<void | Response<any>> {
-    const { password_hash, email } = req.body;
-
+    const { password, email } = req.body;
     const userRepository = AppDataSource.getRepository(User);
 
     try {
       // Validar existencia de email y contraseña
-      if (!email || !password_hash) {
+      if (!email || !password) {
         return res.status(StatusCodes.BAD_REQUEST).json({
           message: "Email or password is required",
         });
@@ -85,7 +84,7 @@ export class UserController {
 
       // Verificar contraseña si el usuario existe
       const isPasswordValid = bcrypt.compareSync(
-        password_hash,
+        password,
         user.password_hash
       );
 
