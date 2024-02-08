@@ -29,7 +29,7 @@ export class User {
     email!: string;
 
     @Column()
-    password_hash!: string;
+    password!: string;
 
     @Column()
     phone_number!: number;

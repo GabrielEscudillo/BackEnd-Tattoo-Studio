@@ -29,7 +29,7 @@ export class UserController {
         address,
         email,
         phone_number,
-        password_hash: bcrypt.hashSync(password, 10),
+        password: bcrypt.hashSync(password, 10),
         role: UserRoles.CUSTOMER,
       });
 
@@ -83,7 +83,7 @@ export class UserController {
       }
 
       // Verificar contraseña si el usuario existe
-      const isPasswordValid = bcrypt.compareSync(password, user.password_hash);
+      const isPasswordValid = bcrypt.compareSync(password, user.password);
 
       // Verificar contraseña valida
       if (!isPasswordValid) {
@@ -169,7 +169,7 @@ export class UserController {
         address,
         email,
         phone_number,
-        password_hash: bcrypt.hashSync(password, 10),
+        password: bcrypt.hashSync(password, 10),
         role: UserRoles.ARTIST,
         created_at: new Date(),
         updated_at: new Date(),
