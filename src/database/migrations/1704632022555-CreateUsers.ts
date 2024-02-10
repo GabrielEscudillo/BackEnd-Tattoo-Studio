@@ -29,6 +29,12 @@ export class CreateUsers1704632022555 implements MigrationInterface {
                         length: "255",
                     },
                     {
+                        name: "photo",
+                        type: "varchar",
+                        length: "500",
+                        default: "'https://cdn.icon-icons.com/icons2/1378/PNG/512/avatardefault_92824.png'"
+                    },
+                    {
                         name: "address",
                         type: "varchar",
                         length: "255",

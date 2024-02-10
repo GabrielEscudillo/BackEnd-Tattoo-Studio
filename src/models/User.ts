@@ -23,6 +23,9 @@ export class User {
     last_name!: string;
 
     @Column()
+    photo?: string;
+
+    @Column()
     address!: string;
 
     @Column()

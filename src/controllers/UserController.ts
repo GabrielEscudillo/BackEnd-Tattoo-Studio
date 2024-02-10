@@ -184,7 +184,6 @@ export class UserController {
       });
       // Utilizar el método save para agregar un nuevo artista
       // await artistRepository.save(newArtist);
-      console.log("2");
       res.status(201).json(newArtist);
     } catch (error: any) {
       console.error("Error while creating artist:", error);
@@ -209,7 +208,7 @@ export class UserController {
         [key: string]: any;
       }
       const filter: filter = {
-        select: ["name"],
+        select: ["id","name"],
         where: {
           role: UserRoles.ARTIST,
         },
