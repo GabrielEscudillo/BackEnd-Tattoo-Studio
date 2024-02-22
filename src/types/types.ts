@@ -25,5 +25,5 @@ export interface CreateUserRequestBody {
  
  export interface TokenData {
     userId: string;
-    userRoles: string[];
+    userRoles: string;
  }

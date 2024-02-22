@@ -12,7 +12,7 @@ router.post("/newAppointment", auth, appointmentController.create)
 router.get("/mysessions/:id", auth, appointmentController.getById)
 router.get("/myappointments/:id",auth, isArtist, appointmentController.getByArtist)
 router.patch("/:id", auth, appointmentController.updateAppointment);
-router.delete("/:id", auth, isArtist, appointmentController.deleteAppointment);
+router.delete("/:id", auth, appointmentController.deleteAppointment);
 
 export default router;
 
