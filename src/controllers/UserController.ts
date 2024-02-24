@@ -217,7 +217,10 @@ export class UserController {
       });
     }
   }
-  async getAllUsers(req: Request, res: Response): Promise<void | Response<any>> {
+  async getAllUsers(
+    req: Request,
+    res: Response
+  ): Promise<void | Response<any>> {
     try {
       const UserRepository = AppDataSource.getRepository(User);
 
@@ -226,19 +229,17 @@ export class UserController {
       let currentPage = page ? +page : 1;
       let itemsPerPage = skip ? +skip : 10;
 
-      const [allUsers, count] = await UserRepository.findAndCount(
-        {
-          skip: (currentPage - 1) * itemsPerPage,
-          take: itemsPerPage,
-          select: {
-            id: true,
-            name: true,
-            last_name: true,
-            phone_number: true,
-            email: true,
-            
-          },
-        });
+      const [allUsers, count] = await UserRepository.findAndCount({
+        skip: (currentPage - 1) * itemsPerPage,
+        take: itemsPerPage,
+        select: {
+          id: true,
+          name: true,
+          last_name: true,
+          phone_number: true,
+          email: true,
+        },
+      });
       res.status(200).json({
         count,
         skip: itemsPerPage,
@@ -252,4 +253,20 @@ export class UserController {
     }
   }
 
+  async deleteUser(req: Request, res: Response): Promise<void | Response<any>> {
+    try {
+      const id = +req.params.id;
+
+      const userRepository = AppDataSource.getRepository(User);
+      await userRepository.delete({ id: id });
+
+      res.status(200).json({
+        message: "user deleted successfully",
+      });
+    } catch (error) {
+      res.status(500).json({
+        message: "Error while deleting user",
+      });
+    }
+  }
 }

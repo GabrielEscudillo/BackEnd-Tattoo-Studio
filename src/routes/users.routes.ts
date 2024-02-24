@@ -13,5 +13,7 @@ router.patch("/:id", auth, userController.update);
 router.get("/artists/list", userController.getAllArtists);
 router.post("/artists/create", auth, isSuperAdmin, userController.createArtist);
 router.get("/users/getall", auth, isSuperAdmin, userController.getAllUsers);
+router.delete("/delete/:id", auth, isSuperAdmin, userController.deleteUser);
+
 
 export default router;
