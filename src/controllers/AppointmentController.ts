@@ -9,38 +9,46 @@ import { Artist } from "../models/Artist";
 export class AppointmentController {
   async getAll(req: Request, res: Response): Promise<void | Response<any>> {
     try {
-      const AppointmentRepository = AppDataSource.getRepository(Appointment);
+      const appointmentRepository = AppDataSource.getRepository(Appointment);
 
-      let { page, skip } = req.query;
+      const page = req.query.page ? Number(req.query.page) : null;
+      const limit = req.query.limit ? Number(req.query.limit) : null;
 
-      let currentPage = page ? +page : 1;
-      let itemsPerPage = skip ? +skip : 10;
+      interface filter {
+        [key: string]: any;
+      }
+      const filter: filter = {
+        select: {
+          date: true,
+          time: true,
+          user_id: true,
+          artist_id: true,
+        },
+      };
 
-      const [allAppointments, count] = await AppointmentRepository.findAndCount(
-        {
-          skip: (currentPage - 1) * itemsPerPage,
-          take: itemsPerPage,
-          select: {
-            id: true,
-            user_id: true,
-            artist_id: true,
-            date: true,
-            time: true,
-          },
-        }
+      if (page && limit) {
+        filter.skip = (page - 1) * limit;
+      }
+      if (limit) {
+        filter.take = limit;
+      }
+
+      const [allAppointments, count] = await appointmentRepository.findAndCount(
+        filter
       );
       res.status(200).json({
         count,
-        skip: itemsPerPage,
-        page: currentPage,
+        limit,
+        page,
         results: allAppointments,
       });
     } catch (error) {
       res.status(500).json({
-        message: "Error while getting appointments",
+        message: "Error while getting users",
       });
     }
   }
+
   async getById(req: Request, res: Response): Promise<void | Response<any>> {
     try {
       const id = +req.params.id;
@@ -70,6 +78,41 @@ export class AppointmentController {
     }
   }
 
+  // async getByArtist(
+  //   req: Request,
+  //   res: Response
+  // ): Promise<void | Response<any>> {
+  //   try {
+  //     const id = +req.params.id;
+  //     const appointmentRepository = AppDataSource.getRepository(Appointment);
+  //     const myAppointments = await appointmentRepository.find({
+  //       where: { artist_id: id }, // Filtrar citas por el ID del usuario
+  //       relations: ["user"], // Cargar las relaciones del artista y del usuario asociado
+  //       select: ["id", "date", "time", "artist_id"], // Seleccionar solo los campos necesarios
+  //     });
+
+  //     // Mapear las citas para incluir el nombre del artista
+  //     const appointmentsWithArtistName = myAppointments.map((appointment) => ({
+  //       id: appointment.id,
+  //       date: appointment.date,
+  //       time: appointment.time,
+  //       artist_id: appointment.artist_id,
+  //       user_id: {
+  //         id: appointment.user.id,
+  //         name: appointment.user.name,
+  //         last_name: appointment.user.last_name,
+  //         phone_number: appointment.user.phone_number,
+  //       },
+  //     }));
+
+  //     res.status(200).json(appointmentsWithArtistName);
+  //   } catch (error) {
+  //     res.status(500).json({
+  //       message: "Error while getting appointmentsxd",
+  //     });
+  //   }
+  // }
+
   async getByArtist(
     req: Request,
     res: Response
@@ -77,20 +120,30 @@ export class AppointmentController {
     try {
       const id = +req.params.id;
       const appointmentRepository = AppDataSource.getRepository(Appointment);
-      const appointments = await appointmentRepository.findBy({
-        artist_id: id,
+      const myAppointments = await appointmentRepository.find({
+        where: { artist_id: id }, // Filtrar citas por el ID del usuario
+        relations: ["user"], // Cargar las relaciones del artista y del usuario asociado
+        select: ["id", "date", "time", "artist_id"], // Seleccionar solo los campos necesarios
       });
 
-      if (!appointments) {
-        return res.status(404).json({
-          message: "Appointment not found",
-        });
-      }
+      // Mapear las citas para incluir el nombre del artista
+      const appointmentsWithArtistName = myAppointments.map((appointment) => ({
+        id: appointment.id,
+        date: appointment.date,
+        time: appointment.time,
+        artist_id: appointment.artist_id,
+        user_id: {
+          id: appointment.user.id,
+          name: appointment.user.name,
+          last_name: appointment.user.last_name,
+          phone_number: appointment.user.phone_number,
+        },
+      }));
 
-      res.status(200).json(appointments);
+      res.status(200).json(appointmentsWithArtistName);
     } catch (error) {
       res.status(500).json({
-        message: "Error while getting appointments",
+        message: "Error while getting appointmentsxd",
       });
     }
   }
