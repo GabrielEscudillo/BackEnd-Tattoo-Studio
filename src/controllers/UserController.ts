@@ -4,7 +4,6 @@ import {
   LoginUserRequestBody,
   TokenData,
 } from "../types/types";
-import { getManager } from "typeorm";
 import { User } from "../models/User";
 import bcrypt from "bcrypt";
 import { AppDataSource } from "../database/data-source";
@@ -94,7 +93,7 @@ export class UserController {
       }
 
       // Generar token
-      const userRole = user.role.role_name 
+      const userRole = user.role.role_name;
 
       const tokenPayload: TokenData = {
         userId: user.id?.toString() as string,
@@ -185,8 +184,6 @@ export class UserController {
         user: newUser,
         portfolio: "https://", // Utiliza el valor proporcionado o un valor predeterminado
       });
-      // Utilizar el método save para agregar un nuevo artista
-      // await artistRepository.save(newArtist);
       res.status(201).json(newArtist);
     } catch (error: any) {
       console.error("Error while creating artist:", error);
@@ -202,17 +199,17 @@ export class UserController {
   ): Promise<void | Response<any>> {
     try {
       const artistRepository = AppDataSource.getRepository(Artist);
-  
+
       const allArtists = await artistRepository.find({
-        relations: ['user'],
+        relations: ["user"],
       });
-  
-      const artistsWithDetails = allArtists.map(artist => ({
+
+      const artistsWithDetails = allArtists.map((artist) => ({
         id: artist.id,
         name: artist.user.name,
         photo: artist.user.photo,
       }));
-  
+
       res.status(200).json(artistsWithDetails);
     } catch (error) {
       res.status(500).json({
@@ -220,6 +217,39 @@ export class UserController {
       });
     }
   }
-  
+  async getAllUsers(req: Request, res: Response): Promise<void | Response<any>> {
+    try {
+      const UserRepository = AppDataSource.getRepository(User);
+
+      let { page, skip } = req.query;
+
+      let currentPage = page ? +page : 1;
+      let itemsPerPage = skip ? +skip : 10;
+
+      const [allUsers, count] = await UserRepository.findAndCount(
+        {
+          skip: (currentPage - 1) * itemsPerPage,
+          take: itemsPerPage,
+          select: {
+            id: true,
+            name: true,
+            last_name: true,
+            phone_number: true,
+            email: true,
+            
+          },
+        });
+      res.status(200).json({
+        count,
+        skip: itemsPerPage,
+        page: currentPage,
+        results: allUsers,
+      });
+    } catch (error) {
+      res.status(500).json({
+        message: "Error while getting appointments",
+      });
+    }
+  }
 
 }
