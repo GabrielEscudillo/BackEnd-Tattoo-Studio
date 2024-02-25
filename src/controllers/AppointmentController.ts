@@ -17,13 +17,14 @@ export class AppointmentController {
       interface filter {
         [key: string]: any;
       }
-      const filter: filter = {
+      const filter: any = {
         select: {
           date: true,
           time: true,
           user_id: true,
           artist_id: true,
         },
+          relations: ["artist", "artist.user", "user"]
       };
 
       if (page && limit) {
@@ -36,11 +37,20 @@ export class AppointmentController {
       const [allAppointments, count] = await appointmentRepository.findAndCount(
         filter
       );
+
+      const appointmentsWithArtistNames = allAppointments.map(appointment => ({
+        ...appointment,
+        artist_name: appointment.artist.user.name, // Assuming 'name' is the property for artist's name
+        user_name: appointment.user.name,
+        user_last_name: appointment.user.last_name,
+
+    }));
+
       res.status(200).json({
         count,
         limit,
         page,
-        results: allAppointments,
+        results: appointmentsWithArtistNames,
       });
     } catch (error) {
       res.status(500).json({
