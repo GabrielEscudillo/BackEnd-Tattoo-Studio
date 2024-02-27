@@ -3,6 +3,7 @@ import { Appointment } from "../models/Appointment";
 import { AppDataSource } from "../database/data-source";
 import { CreateAppointmentsRequestBody } from "../types/types";
 import { Artist } from "../models/Artist";
+import { User } from "../models/User";
 
 //----------------------------------------------------------------------
 
@@ -23,6 +24,7 @@ export class AppointmentController {
           time: true,
           user_id: true,
           artist_id: true,
+          id: true,
         },
           relations: ["artist", "artist.user", "user"]
       };
@@ -88,75 +90,59 @@ export class AppointmentController {
     }
   }
 
-  // async getByArtist(
-  //   req: Request,
-  //   res: Response
-  // ): Promise<void | Response<any>> {
-  //   try {
-  //     const id = +req.params.id;
-  //     const appointmentRepository = AppDataSource.getRepository(Appointment);
-  //     const myAppointments = await appointmentRepository.find({
-  //       where: { artist_id: id }, // Filtrar citas por el ID del usuario
-  //       relations: ["user"], // Cargar las relaciones del artista y del usuario asociado
-  //       select: ["id", "date", "time", "artist_id"], // Seleccionar solo los campos necesarios
-  //     });
-
-  //     // Mapear las citas para incluir el nombre del artista
-  //     const appointmentsWithArtistName = myAppointments.map((appointment) => ({
-  //       id: appointment.id,
-  //       date: appointment.date,
-  //       time: appointment.time,
-  //       artist_id: appointment.artist_id,
-  //       user_id: {
-  //         id: appointment.user.id,
-  //         name: appointment.user.name,
-  //         last_name: appointment.user.last_name,
-  //         phone_number: appointment.user.phone_number,
-  //       },
-  //     }));
-
-  //     res.status(200).json(appointmentsWithArtistName);
-  //   } catch (error) {
-  //     res.status(500).json({
-  //       message: "Error while getting appointmentsxd",
-  //     });
-  //   }
-  // }
-
   async getByArtist(
     req: Request,
     res: Response
   ): Promise<void | Response<any>> {
     try {
-      const id = +req.params.id;
+      const userId = +req.params.id; // Obtener el user_id de los parámetros de la ruta
+      const userRepository = AppDataSource.getRepository(User);
+      
+      // Buscar el usuario con la relación con el artista
+      const user = await userRepository
+        .createQueryBuilder("user")
+        .leftJoinAndSelect("user.artist", "artist")
+        .where("user.id = :userId", { userId })
+        .getOne();
+  
+      // Si el usuario no existe, devuelve un error 404
+      if (!user || !user.artist) {
+        return res.status(404).json({ message: "User or associated artist not found" });
+      }
+  
+      const artistId = user.artist.id; // Obtener el artist_id asociado al usuario
+  
       const appointmentRepository = AppDataSource.getRepository(Appointment);
       const myAppointments = await appointmentRepository.find({
-        where: { artist_id: id }, // Filtrar citas por el ID del usuario
-        relations: ["user"], // Cargar las relaciones del artista y del usuario asociado
+        where: { artist_id: artistId }, // Filtrar citas por el artist_id obtenido
+        relations: ["user"], // Cargar la relación con el usuario asociado a la cita
         select: ["id", "date", "time", "artist_id"], // Seleccionar solo los campos necesarios
       });
-
-      // Mapear las citas para incluir el nombre del artista
-      const appointmentsWithArtistName = myAppointments.map((appointment) => ({
+  
+      // Mapear las citas para incluir el nombre del usuario
+      const appointmentsWithUserName = myAppointments.map((appointment) => ({
         id: appointment.id,
         date: appointment.date,
         time: appointment.time,
         artist_id: appointment.artist_id,
-        user_id: {
+        user: {
           id: appointment.user.id,
           name: appointment.user.name,
           last_name: appointment.user.last_name,
           phone_number: appointment.user.phone_number,
         },
       }));
-
-      res.status(200).json(appointmentsWithArtistName);
+  
+      res.status(200).json(appointmentsWithUserName);
     } catch (error) {
+      console.error(error);
       res.status(500).json({
-        message: "Error while getting appointmentsxd",
+        message: "Error while getting appointments",
       });
     }
   }
+  
+
 
   async create(
     req: Request<{}, {}, CreateAppointmentsRequestBody>,
